@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.12)
+
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+
+project(modbus_v2 C CXX ASM)
+
+set(CMAKE_C_STANDART 11)
+set(CMAKE_CXX_STANDART 17)
+
+include_directories(./)		# Расположение заголовочных файлов
+set(SOURCES main.cpp 
+    modbus.cpp modbus.hpp)
+
+pico_sdk_init()
+
+add_executable(
+    ${PROJECT_NAME}
+    ${SOURCES}
+)
+
+
+# create map/bin/hex file etc.
+pico_add_extra_outputs(${PROJECT_NAME})
+
+# pull in common dependencies
+target_link_libraries(
+    ${PROJECT_NAME}
+    pico_stdlib
+)
+
+pico_enable_stdio_usb(  ${PROJECT_NAME} 0)
+pico_enable_stdio_uart( ${PROJECT_NAME} 1)

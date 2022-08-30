@@ -1,0 +1,3 @@
+C:/Users/vodg/Desktop/rp2040 firmware/modbus test v2/build/pioasm/CMakeFiles/pioasm.dir
+C:/Users/vodg/Desktop/rp2040 firmware/modbus test v2/build/pioasm/CMakeFiles/edit_cache.dir
+C:/Users/vodg/Desktop/rp2040 firmware/modbus test v2/build/pioasm/CMakeFiles/rebuild_cache.dir
