@@ -2,6 +2,7 @@
 #include <hardware/uart.h>
 #include <pico/stdlib.h>
 #include <stdio.h>
+#include "pico/multicore.h"
 
 #include "modbus.hpp"
 
@@ -34,6 +35,20 @@ void on_mb_rx()
     modbus.mb_rx(uart_getc(uart1));
 }
 
+void modbus_process_on_core_1()
+{
+  while(true)
+  {
+    modbus.mb_process();
+
+    uint16_t time_sec = (uint16_t) (time_us_64()/(1000*1000));
+
+    modbus.sensor_0 = time_sec*10;
+    modbus.sensor_1 = time_sec*20;
+    modbus.sensor_2 = time_sec*30;
+  }
+}
+
 
 int main(void)
 {
@@ -50,15 +65,12 @@ int main(void)
                  MB_TX_PIN, 
                  MB_DE_PIN);
 
+  multicore_launch_core1(modbus_process_on_core_1);
+
   while(true)
   {
-    modbus.mb_process();
-
-    uint16_t time_sec = (uint16_t) (time_us_64()/(1000*1000));
-
-    modbus.sensor_0 = time_sec*10;
-    modbus.sensor_1 = time_sec*20;
-    modbus.sensor_2 = time_sec*30;
+    printf("core 0 in sleep...");
+    sleep_ms(1000);
   }
 }
 

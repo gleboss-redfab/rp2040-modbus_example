@@ -63,6 +63,7 @@ private:
     uint8_t mb_read_holding_register(uint16_t addr, uint16_t* reg);
     uint16_t mb_calc_crc16(const uint8_t* buf, uint8_t len);
     mb_state_t mb_check_buf();
+    
     void mb_reset_buf(); 
     void mb_error(uint8_t err);
     void mb_rx_rtu();
